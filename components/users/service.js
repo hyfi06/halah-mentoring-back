@@ -74,6 +74,11 @@ class UsersService {
 
     return updateUserId;
   }
+
+  async deleteUser(userId) {
+    const deletedUserId = await this.mongoDB.delete(this.collection, userId);
+    return deletedUserId || userId;
+  }
 }
 
 module.exports = UsersService;
