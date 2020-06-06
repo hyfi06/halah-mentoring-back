@@ -79,3 +79,5 @@ function userApi(app) {
     }
   );
 }
+
+module.exports = userApi;
