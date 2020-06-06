@@ -12,7 +12,7 @@ require('../../utils/auth/strategies/basic');
 
 function authApi(app) {
   const router = express.Router();
-  app.use('/api/auth', router);
+  app.use('/v1/auth', router);
 
   const apiKeysService = new ApiKeysService();
   const usersService = new UsersService();
@@ -46,15 +46,12 @@ function authApi(app) {
 
           const {
             _id: id,
-            username,
             firstName,
             imageURL,
             lastName,
             typeOfUser,
             email,
           } = user;
-
-          const defaultPath = config.defaultPath[user.typeOfUser] || '/';
 
           const payload = {
             sub: id,
@@ -69,12 +66,10 @@ function authApi(app) {
             token,
             user: {
               id,
-              username,
               typeOfUser,
               imageURL,
               firstName,
               lastName,
-              defaultPath,
               email,
             },
           });
@@ -89,7 +84,7 @@ function authApi(app) {
     const { body: user } = req;
 
     try {
-      const createdUserId = await usersService.createUser({ user });
+      const createdUserId = await usersService.createUser(user);
 
       res.status(201).json({
         data: createdUserId,
