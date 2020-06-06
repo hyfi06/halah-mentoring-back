@@ -12,11 +12,9 @@ const config = {
   publicApiKeyToken: process.env.PUBLIC_API_KEY_TOKEN,
   adminApiKeyToken: process.env.ADMIN_API_KEY_TOKEN,
   dbCollections: {
-    users: 'usersCSV',
-    orders: 'orders',
+    users: 'user',
     apiKeys: 'apiKeys',
-    exams: 'exams',
-    results: 'results',
+    resources: 'resources',
   },
 };
 
