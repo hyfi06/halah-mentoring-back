@@ -25,9 +25,8 @@ class UsersService {
    * @returns {object[]} users filtered
    */
   async getUsers({ typeOfUser }) {
-
     const query = { typeOfUser };
-    const users = (await this.mongoDB.getAll(this.collection, query))
+    const users = await this.mongoDB.getAll(this.collection, query);
 
     if (users.length == 0) {
       throw boom.notFound('Users cannot found in these filters');
@@ -37,12 +36,13 @@ class UsersService {
 
   /**
    * Create a new user
-   * @param {object} user 
+   * @param {object} user
    * @returns {string} created user id and  created user name
    */
   async createUser(user) {
-
-    const checkUser = await this.mongoDB.getAll(this.collection, { email: user.email });
+    const checkUser = await this.mongoDB.getAll(this.collection, {
+      email: user.email,
+    });
 
     if (checkUser !== null) {
       return boom.badImplementation('Usuario ya registrado');
@@ -50,10 +50,7 @@ class UsersService {
 
     user.password = await bcrypt.hash(user.password, 10);
 
-    const createUserId = await this.mongoDB.create(
-      this.collection,
-      user,
-    );
+    const createUserId = await this.mongoDB.create(this.collection, user);
 
     return createUserId;
   }
