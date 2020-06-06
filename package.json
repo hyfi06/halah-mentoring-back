@@ -1,0 +1,41 @@
+{
+  "name": "halah-mentoring",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyfi06/halah-mentoring-back.git"
+  },
+  "keywords": [],
+  "contributors": [
+    {
+      "name": "Alexis Araujo",
+      "email": "ala1289@gmail.com"
+    },
+    {
+      "name": "Hector Olvera",
+      "email": "hector.olvera@ciencias.unam.mx"
+    },
+    {
+      "name": "Humberto Lopez",
+      "email": "humbertolopez954@gmail.com"
+    },
+    {
+      "name": "Alberto Camarena",
+      "email": "albertocamarena.77t@gmail.com"
+    },
+    {
+      "name": "Luis Flores",
+      "email": "luisfloresdev@gmail.com"
+    }
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hyfi06/halah-mentoring-back/issues"
+  },
+  "homepage": "https://github.com/hyfi06/halah-mentoring-back#readme"
+}
