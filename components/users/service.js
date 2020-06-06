@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const { config } = require('../../config');
 const boom = require('@hapi/boom');
 
-class usersService {
+class UsersService {
   constructor() {
     this.collection = config.dbCollections.users;
     this.mongoDB = new MongoLib();
@@ -14,7 +14,7 @@ class usersService {
    * @param {string} userId user id
    * @returns {object} user data
    */
-  async getUserId(userId) {
+  async getUser(userId) {
     const user = await this.mongoDB.get(this.collection, userId);
     return user || {};
   }
@@ -79,4 +79,4 @@ class usersService {
   }
 }
 
-module.exports = usersService;
+module.exports = UsersService;
