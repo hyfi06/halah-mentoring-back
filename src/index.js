@@ -14,6 +14,7 @@ const { config } = require('../config/index');
 
 const authApi = require('../components/auth/routes');
 const userApi = require('../components/users/routes');
+const resourcesApi = require('../components/resources/routes');
 
 app.use(helmet());
 app.use(cors());
@@ -22,6 +23,7 @@ app.use(express.json());
 //Routes
 authApi(app);
 userApi(app);
+resourcesApi(app);
 
 // Catch 404
 app.use(notFoundHandler);
