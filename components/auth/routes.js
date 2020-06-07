@@ -81,9 +81,21 @@ function authApi(app) {
   });
 
   router.post('/sign-up', async (req, res, next) => {
-    const { body: user } = req;
-
     try {
+      const { apiKeyToken, user } = req.body;
+
+      if (!apiKeyToken) {
+        next(boom.unauthorized('apiKeyToken is required'));
+        return;
+      }
+
+      const apiKey = await apiKeysService.getApiKey({ token: apiKeyToken });
+
+      if (!apiKey) {
+        next(boom.unauthorized());
+        return;
+      }
+
       const createdUserId = await usersService.createUser(user);
 
       res.status(201).json({
