@@ -16,8 +16,7 @@ function userApi(app) {
     async function (req, res, next) {
       try {
         const { query } = req;
-        const { limit } = query;
-        const { offset } = query;
+        const { limit, offset } = query;
 
         delete query.limit;
         delete query.offset;
