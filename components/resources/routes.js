@@ -12,7 +12,6 @@ function resourcesApi(app) {
 
   router.get(
     '/',
-    passport.authenticate('jwt', { session: false }),
     async function (req, res, next) {
       try {
         const { categories } = req.query;
@@ -30,7 +29,6 @@ function resourcesApi(app) {
 
   router.get(
     '/:resourceId',
-    passport.authenticate('jwt', { session: false }),
     async function (req, res, next) {
       try {
         const { resourceId } = req.params;
@@ -47,7 +45,6 @@ function resourcesApi(app) {
 
   router.post(
     '/',
-    passport.authenticate('jwt', { session: false }),
     async function (req, res, next) {
       try {
         const resources = req.body;
@@ -64,7 +61,6 @@ function resourcesApi(app) {
 
   router.patch(
     '/:resourceId',
-    passport.authenticate('jwt', { session: false }),
     async function (req, res, next) {
       try {
         const { resourceId } = req.params;
