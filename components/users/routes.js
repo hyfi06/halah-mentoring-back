@@ -12,7 +12,6 @@ function userApi(app) {
   const usersService = new UsersService();
   router.get(
     '/',
-    passport.authenticate('jwt', { session: false }),
     async function (req, res, next) {
       try {
         const { query } = req;
@@ -38,8 +37,6 @@ function userApi(app) {
 
   router.get(
     '/:userId',
-    passport.authenticate('jwt', { session: false }),
-    async function (req, res, next) {
       try {
         const { userId } = req.params;
         const user = await usersService.getUser(userId);
@@ -56,7 +53,6 @@ function userApi(app) {
 
   router.patch(
     '/:userId',
-    passport.authenticate('jwt', { session: false }),
     async function (req, res, next) {
       try {
         const { userId } = req.params;
@@ -74,7 +70,6 @@ function userApi(app) {
 
   router.delete(
     '/:userId',
-    passport.authenticate('jwt', { session: false }),
     async function (req, res, next) {
       try {
         const { userId } = req.params;
