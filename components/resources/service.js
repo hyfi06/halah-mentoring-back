@@ -8,8 +8,10 @@ class resourcesService {
     this.mongoDB = new MongoLib();
   }
 
-  async getResources({ categories }) {
-    const query = { categories };
+  async getResources({ category }) {
+    const query = typeof category === 'undefined' ?
+      { categories: { $elemMatch: category } } : {};
+
 
     const resources = await this.mongoDB.getAll(this.collection, query);
 
