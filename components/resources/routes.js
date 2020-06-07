@@ -14,8 +14,8 @@ function resourcesApi(app) {
     '/',
     async function (req, res, next) {
       try {
-        const { categories } = req.query;
-        const resources = await resourcesService.getResources({ categories });
+        const { category } = req.query;
+        const resources = await resourcesService.getResources({ category });
 
         res.status(200).json({
           data: resources,
@@ -49,7 +49,7 @@ function resourcesApi(app) {
       try {
         const resources = req.body;
         const createdResourceId = await resourcesService.createResource(resources);
-        res.status(200).json({
+        res.status(201).json({
           data: createdResourceId,
           message: 'resources retrieved',
         });
