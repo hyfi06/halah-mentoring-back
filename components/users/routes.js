@@ -37,6 +37,7 @@ function userApi(app) {
 
   router.get(
     '/:userId',
+    async function (req, res, next) {
       try {
         const { userId } = req.params;
         const user = await usersService.getUser(userId);
