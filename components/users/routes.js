@@ -18,8 +18,18 @@ function userApi(app) {
         const { typeOfUser } = req.query;
         const users = await usersService.getUsers({ typeOfUser });
 
+        const fields = ['_id', 'email', 'createdAt', 'updatedAt'];
+        const data = users.map((user) =>
+          Object.keys(user)
+            .filter((key) => fields.includes(key))
+            .reduce((newUser, key) => {
+              newUser[key] = user[key];
+              return newUser;
+            }, {})
+        );
+
         res.status(200).json({
-          data: users,
+          data: data,
           message: 'users retrieved',
         });
       } catch (err) {
