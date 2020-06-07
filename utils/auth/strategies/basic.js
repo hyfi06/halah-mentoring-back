@@ -10,7 +10,7 @@ passport.use(
     const userService = new UsersService();
 
     try {
-      const user = await userService.getUserByEmail(email);
+      const user = await userService.getUserByEmail({ email });
 
       if (!user) {
         return cb(
@@ -20,10 +20,7 @@ passport.use(
       }
 
       if (!(await bcrypt.compare(password, user.password))) {
-        return cb(
-          boom.unauthorized('Please verify username or password'),
-          false
-        );
+        return cb(boom.unauthorized('Please verify password'), false);
       }
 
       delete user.password;

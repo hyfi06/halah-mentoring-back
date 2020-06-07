@@ -17,6 +17,7 @@ function userApi(app) {
       try {
         const { typeOfUser } = req.query;
         const users = await usersService.getUsers({ typeOfUser });
+
         res.status(200).json({
           data: users,
           message: 'users retrieved',

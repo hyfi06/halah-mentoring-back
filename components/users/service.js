@@ -20,13 +20,13 @@ class UsersService {
   }
 
   /**
-  * Retrieve a user by id
-  * @param {string} email user id
-  * @returns {object} user data
-  */
-  async getUserByEmail(email) {
-    const user = await this.mongoDB.get(this.collection, { email });
-    return user || {};
+   * Retrieve a user by email
+   * @param {string} email user id
+   * @returns {object} user data
+   */
+  async getUserByEmail({ email }) {
+    const [user] = await this.mongoDB.getAll(this.collection, { email });
+    return user;
   }
 
   /**
@@ -36,6 +36,7 @@ class UsersService {
    */
   async getUsers({ typeOfUser }) {
     const query = { typeOfUser };
+
     const users = await this.mongoDB.getAll(this.collection, query);
 
     if (users.length == 0) {
@@ -54,8 +55,8 @@ class UsersService {
       email: user.email,
     });
 
-    if (checkUser !== null) {
-      throw boom.badImplementation('Usuario ya registrado');
+    if (checkUser.length > 0) {
+      throw boom.badRequest('User registered');
     }
 
     user.password = await bcrypt.hash(user.password, 10);

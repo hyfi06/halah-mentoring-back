@@ -15,7 +15,7 @@ passport.use(
       const usersService = new UsersService();
 
       try {
-        const user = await usersService.getUser({
+        const user = await usersService.getUserByEmail({
           email: tokenPayload.email,
         });
 
@@ -25,7 +25,7 @@ passport.use(
 
         delete user.password;
 
-        cb(null, { ...user, scopes: tokenPayload.scopes });
+        cb(null, { ...user });
       } catch (error) {
         return cb(error);
       }
