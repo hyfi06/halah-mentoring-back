@@ -24,8 +24,13 @@ class UsersService {
    * @param {string} email user id
    * @returns {object} user data
    */
-  async getUserByEmail({ email }) {
-    const [user] = await this.mongoDB.getAll(this.collection, { email });
+  async getUserByEmail({ email }, limit, offset) {
+    const [user] = await this.mongoDB.getAll(
+      this.collection,
+      { email },
+      limit,
+      offset
+    );
     return user;
   }
 
@@ -34,14 +39,17 @@ class UsersService {
    * @param {string} query.typeOfUser query
    * @returns {object[]} users filtered
    */
-  async getUsers({ typeOfUser }) {
-    const query = { typeOfUser };
+  async getUsers(query, limit, offset) {
+    const users = await this.mongoDB.getAll(
+      this.collection,
+      query,
+      limit,
+      offset
+    );
 
-    const users = await this.mongoDB.getAll(this.collection, query);
-
-    if (users.length == 0) {
-      throw boom.notFound('Users cannot found in these filters');
-    }
+    // if (users.length == 0) {
+    //   throw boom.notFound('Users cannot found in these filters');
+    // }
     return users || [];
   }
 
