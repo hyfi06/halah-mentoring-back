@@ -78,7 +78,6 @@ function resourcesApi(app) {
 
   router.delete(
     '/:resourceId',
-    passport.authenticate('jwt', { session: false }),
     async function (req, res, next) {
       try {
         const { resourceId } = req.params;
