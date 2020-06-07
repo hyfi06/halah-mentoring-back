@@ -1,5 +1,4 @@
 const MongoLib = require('../../lib/mongo');
-const bcrypt = require('bcrypt');
 const { config } = require('../../config');
 const boom = require('@hapi/boom');
 
