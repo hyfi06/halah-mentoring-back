@@ -34,10 +34,13 @@ class UsersService {
    * @param {string} query.typeOfUser query
    * @returns {object[]} users filtered
    */
-  async getUsers({ typeOfUser }) {
-    const query = { typeOfUser };
-
-    const users = await this.mongoDB.getAll(this.collection, query);
+  async getUsers(query, limit, offset) {
+    const users = await this.mongoDB.getAll(
+      this.collection,
+      query,
+      limit,
+      offset
+    );
 
     if (users.length == 0) {
       throw boom.notFound('Users cannot found in these filters');

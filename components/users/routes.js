@@ -15,10 +15,16 @@ function userApi(app) {
     passport.authenticate('jwt', { session: false }),
     async function (req, res, next) {
       try {
-        const { typeOfUser } = req.query;
-        const users = await usersService.getUsers({ typeOfUser });
+        const { query } = req;
+        const { limit, offset } = query;
 
-        users.forEach((user) => { delete user.password; });
+        delete query.limit;
+        delete query.offset;
+        const users = await usersService.getUsers(query, limit, offset);
+
+        users.forEach((user) => {
+          delete user.password;
+        });
 
         res.status(200).json({
           data: users,
