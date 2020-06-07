@@ -18,18 +18,10 @@ function userApi(app) {
         const { typeOfUser } = req.query;
         const users = await usersService.getUsers({ typeOfUser });
 
-        const fields = ['_id', 'email', 'createdAt', 'updatedAt'];
-        const data = users.map((user) =>
-          Object.keys(user)
-            .filter((key) => fields.includes(key))
-            .reduce((newUser, key) => {
-              newUser[key] = user[key];
-              return newUser;
-            }, {})
-        );
+        users.forEach((user) => { delete user.password; });
 
         res.status(200).json({
-          data: data,
+          data: users,
           message: 'users retrieved',
         });
       } catch (err) {
@@ -45,6 +37,7 @@ function userApi(app) {
       try {
         const { userId } = req.params;
         const user = await usersService.getUser(userId);
+        delete user.password;
         res.status(200).json({
           data: user,
           message: 'user retrieved',
@@ -62,7 +55,7 @@ function userApi(app) {
       try {
         const { userId } = req.params;
         const user = req.body;
-        const updatedUserId = await usersService.updateUser(user);
+        const updatedUserId = await usersService.updateUser({ userId, user });
         res.status(200).json({
           data: updatedUserId,
           message: 'user updated',
