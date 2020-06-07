@@ -20,12 +20,23 @@ class UsersService {
   }
 
   /**
+   * Retrieve a user by email
+   * @param {string} email user id
+   * @returns {object} user data
+   */
+  async getUserByEmail({ email }) {
+    const [user] = await this.mongoDB.getAll(this.collection, { email });
+    return user;
+  }
+
+  /**
    * Retrieve users by query
    * @param {string} query.typeOfUser query
    * @returns {object[]} users filtered
    */
   async getUsers({ typeOfUser }) {
     const query = { typeOfUser };
+
     const users = await this.mongoDB.getAll(this.collection, query);
 
     if (users.length == 0) {
@@ -44,8 +55,8 @@ class UsersService {
       email: user.email,
     });
 
-    if (checkUser !== null) {
-      return boom.badImplementation('Usuario ya registrado');
+    if (checkUser.length > 0) {
+      throw boom.badRequest('User registered');
     }
 
     user.password = await bcrypt.hash(user.password, 10);
@@ -63,7 +74,7 @@ class UsersService {
    */
   async updateUser({ userId, user }) {
     if (Object.keys(user).length == 0) {
-      return boom.badRequest('Not data to update');
+      throw boom.badRequest('Not data to update');
     }
 
     const updateUserId = await this.mongoDB.update(

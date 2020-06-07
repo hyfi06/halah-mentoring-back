@@ -2,7 +2,7 @@ const passport = require('passport');
 const { Strategy, ExtractJwt } = require('passport-jwt');
 const boom = require('@hapi/boom');
 
-const UsersService = require('../../../components/users/usersService');
+const UsersService = require('../../../components/users/service');
 const { config } = require('../../../config/index');
 
 passport.use(
@@ -15,7 +15,7 @@ passport.use(
       const usersService = new UsersService();
 
       try {
-        const user = await usersService.getUser({
+        const user = await usersService.getUserByEmail({
           email: tokenPayload.email,
         });
 
@@ -25,7 +25,7 @@ passport.use(
 
         delete user.password;
 
-        cb(null, { ...user, scopes: tokenPayload.scopes });
+        cb(null, { ...user });
       } catch (error) {
         return cb(error);
       }
