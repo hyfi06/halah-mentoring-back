@@ -10,7 +10,7 @@ passport.use(
     const userService = new UsersService();
 
     try {
-      const user = await userService.getUser({ email });
+      const user = await userService.getUserByEmail(email);
 
       if (!user) {
         return cb(
