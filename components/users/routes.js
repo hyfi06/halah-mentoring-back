@@ -15,17 +15,26 @@ function userApi(app) {
     async function (req, res, next) {
       try {
         const { query } = req;
-        const { limit, offset } = query;
+        const limit = query.limit ? parseInt(query.limit) : 10;
+        const page = query.page ? parseInt(query.page) : 0;
 
         delete query.limit;
-        delete query.offset;
+        delete query.page;
+
+        const offset = page ? page * limit : 0;
+
         const users = await usersService.getUsers(query, limit, offset);
+        const nextpage =
+          users.length < limit
+            ? null
+            : `/v1/user?limit=${limit}&page=${page + 1}`;
 
         users.forEach((user) => {
           delete user.password;
         });
 
         res.status(200).json({
+          next: nextpage,
           data: users,
           message: 'users retrieved',
         });
