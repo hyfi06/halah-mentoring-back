@@ -8,15 +8,19 @@ class resourcesService {
     this.mongoDB = new MongoLib();
   }
 
-  async getResources({ category }) {
-    const query = typeof category !== 'undefined' ?
-      { categories: { $all: [category] } } : {};
+  async getResources({ category }, limit, offset) {
+    const query =
+      typeof category !== 'undefined'
+        ? { categories: { $all: [category] } }
+        : {};
 
-    const resources = await this.mongoDB.getAll(this.collection, query);
+    const resources = await this.mongoDB.getAll(
+      this.collection,
+      query,
+      limit,
+      offset
+    );
 
-    if (resources.length == 0) {
-      throw boom.notFound('Resources cannot found in these filters');
-    }
     return resources || [];
   }
 
@@ -26,7 +30,10 @@ class resourcesService {
   }
 
   async createResource(resource) {
-    const createResourcesId = await this.mongoDB.create(this.collection, resource);
+    const createResourcesId = await this.mongoDB.create(
+      this.collection,
+      resource
+    );
 
     return createResourcesId;
   }
@@ -39,14 +46,17 @@ class resourcesService {
     const updateResourceId = await this.mongoDB.update(
       this.collection,
       resourceId,
-      resource,
+      resource
     );
 
     return updateResourceId;
   }
 
   async deleteResource(resourceId) {
-    const deletedResourceId = await this.mongoDB.delete(this.collection, resourceId);
+    const deletedResourceId = await this.mongoDB.delete(
+      this.collection,
+      resourceId
+    );
     return deletedResourceId || resourceId;
   }
 }
