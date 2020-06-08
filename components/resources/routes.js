@@ -1,6 +1,6 @@
 const express = require('express');
-const passport = require('passport');
 const ResourcesService = require('./service');
+const cacheResponse = require('../../utils/cache');
 
 require('../../utils/auth/strategies/jwt');
 
@@ -11,6 +11,7 @@ function resourcesApi(app) {
   app.use('/v1/resources', router);
 
   router.get('/', async function (req, res, next) {
+    cacheResponse(res, 5 * 60);
     try {
       const { category } = req.query;
       const limit = req.query.limit ? parseInt(req.query.limit) : 10;
@@ -43,6 +44,7 @@ function resourcesApi(app) {
   });
 
   router.get('/:resourceId', async function (req, res, next) {
+    cacheResponse(res, 60 * 60);
     try {
       const { resourceId } = req.params;
       const resource = await resourcesService.getResource(resourceId);
