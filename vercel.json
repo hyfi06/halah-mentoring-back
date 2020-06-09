@@ -1,6 +1,6 @@
 {
   "name": "halah-mentoring-back",
-  "version": 0.1,
+  "version": 1,
   "builds": [{"src":"src/index.js", "use": "@now/node"}],
   "routes": [{"src": "/(.*)", "dest":"/src/index.js"}]
 }
